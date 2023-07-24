@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="center">
+            <div className="left_info"> 
+                <p>
+                    Фамилия студента:<br/>
+                    <input id="Id" type="text"/>
+                </p>
+                <br>
+                <button id="saveBtn">Показать</button>
+                <br>
+    
+        <table border="2">
+            <thead>
+                <tr><th>Фамилия</th>
+                <th>Имя</th>
+                <th>Отчество</th>
+                <th>Дата Рождения</th>
+           </thead>
+            <tbody>
+            </tbody>
+        </table>
+                </div>
+                <br>
+    <button type="button"><a href="index.html">Вернутся на главную</a></button>                
+            </div>
+            <br>
+
+    </div>
+<script>
+
+let Count = -1;
+async function getUser(familiya) {
+    let url = `http://127.0.0.1:8000/get_by_${familiya}`
+            const response = await fetch(url, {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            }) 
+            if (response.ok === true) {
+                // получаем данные
+                const users = await response.json();
+                const rows = document.querySelector("tbody");
+                users.forEach(user => rows.append(row(user)));
+            }
+
+
+        }
+
+        document.getElementById("saveBtn").addEventListener("click", async () => {
+                const userId = document.getElementById("Id").value;                  
+                Count++;        
+                console.log(Count);
+                return getUser(userId); 
+        });
+
+function row(user) {
+
+            const tr = document.createElement("tr");
+            tr.setAttribute("data-rowid", user.id);
+  
+            const familiyaTD = document.createElement("td");
+            familiyaTD.append(user.familiya);
+            tr.append(familiyaTD);
+
+            const imyaTD = document.createElement("td");
+            imyaTD.append(user.imya);
+            tr.append(imyaTD);
+
+            const otchestvoTD = document.createElement("td");
+            otchestvoTD.append(user.otchestvo);
+            tr.append(otchestvoTD);
+
+            const birthdateTD = document.createElement("td");
+            birthdateTD.append(user.birthdate); 
+            tr.append(birthdateTD);
+  
+            const linksTd = document.createElement("td");
+
+            tr.appendChild(linksTd);
+
+            if(Count <= 0){
+                return tr;          
+            }
+            else if(Count > 0){
+                window.location.reload();
+            }
+        }
+
+   </script>
+</body>
+</html>

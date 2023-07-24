@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="GetIdStudent1.js"></script>
+</head>
+
+<body>
+    <div class="center">
+        <h2>Список пользователей</h2>
+        <div>
+            
+            <p>
+                Код студента:<br/>
+                <input id="Id" type="number"/>
+            </p>
+            <br>
+            <button id="saveBtn">Показать</button>
+        </div>        
+            <p>
+                Фамилия:<br/>
+                <input id="userFamilia"/>
+            </p>
+            <p>
+                Имя:<br/>
+                <input id="userImia"/>
+            </p>
+            <p>
+                Отчество:<br/>
+                <input id="userOtchestvo"/>
+            </p>
+            <p>
+                Дата рождения:<br/>
+                <input id="userBirthDate" type="date"/>
+            </p>
+            <br>
+            <button id="ChangeBtn">Изменить</button>
+            <br>
+            <button type="button"><a href="index.html">Вернутся на главную</a></button>
+    </div>
+    
+   <script>
+    async function getUser(id) {
+        let url = `http://127.0.0.1:8000/get_by_student_${id}`
+            const response = await fetch(url, {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                // получаем данные
+                const user = await response.json();
+                document.getElementById("userFamilia").value = user.familiya;
+                document.getElementById("userImia").value = user.imya;
+                document.getElementById("userOtchestvo").value = user.otchestvo;
+                document.getElementById("userBirthDate").value = user.birthdate;
+            }
+        }
+        
+        document.getElementById("saveBtn").addEventListener("click", async () => {
+                const userId = document.getElementById("Id").value; 
+                return getUser(userId);
+        });
+        //изменяем данные текущего пользователя по id
+    async function ChangeUser(id){
+        let url = `http://127.0.0.1:8000/Change_info_${id}`
+        const response = await fetch(url, {
+                method: "PATCH",
+                headers: { 'Content-Type': 'application/json',
+                    'accept': 'application/json' ,
+                    'Access-Control-Allow-Origin': "*",
+                    'Access-Control-Allow-Headers': "*",
+                    'Access-Control-Allow-Methods': "PATCH"
+                },
+            });
+    const requestOptions = {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json',
+                    'accept': 'application/json'
+                },
+                //переписываем данные
+        body: JSON.stringify({ 
+            familiya : document.getElementById("userFamilia").value,
+            imya: document.getElementById("userImia").value ,
+            otchestvo: document.getElementById("userOtchestvo").value,
+            birthdate: document.getElementById("userBirthDate").value
+        })
+    };
+    fetch(url, requestOptions)
+        .then(response => response.json())
+    }
+            
+    document.getElementById("ChangeBtn").addEventListener("click", async () => {
+                const userId = document.getElementById("Id").value; 
+                return ChangeUser(userId);
+        });
+
+
+   </script>
+</body>
+</html>
