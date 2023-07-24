@@ -1,0 +1,7 @@
+DB_CRED = {
+    "dbname": "group1",
+    "dbuser": "postgres",
+    "dbpassword": 123456,
+    "dbhost": "localhost",
+    "dbport": 5432
+}
