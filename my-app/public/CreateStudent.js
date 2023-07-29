@@ -31,6 +31,8 @@ function componentDid() {
         .then(response => response.json())
         // .then(data => this.setState({ postId: data.id }));
 
+        window.location.reload();
+
 
 }
     //Проверяем если данные обновляются

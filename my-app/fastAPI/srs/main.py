@@ -33,10 +33,6 @@ DB_CRED = {
 con = psycopg2.connect(dbname=DB_CRED['dbname'], user=DB_CRED['dbuser'],password=DB_CRED['dbpassword'], host=DB_CRED['dbhost'])
 cursor = con.cursor()
 
-# @app.options('/get_by_student_id',status_code=200)
-# def create_student_options(item: Student):
-#     return "родили"
-
 @app.post('/create_student',status_code=200)
 def create_student(item: Student):
     cursor.execute(f"""INSERT INTO students(id, familiya, imya, otchestvo, birthdate) 
@@ -86,29 +82,3 @@ def get_by_(familiya):
     for student in fet:
         output_List.append({'familiya':student[1],'imya':student[2],'otchestvo':student[3], 'birthdate':student[4]})
     return output_List
-# @app.get('/get_by_student_id')
-
-
-# @app.get('/book')
-# def get_book(q: str = Query(..., description = "Search book")):
-#     return q
-
-# @app.get('/book/{pk}')
-# def get_single_book(pk: int = Path(...,gt = 1)):
-#     return {"pk": pk}
-
-# @app.get('/author')
-# def create_author(author:Author = Body(...,embed=True)):
-#     return{"author":author}
-
-# @app.get("/")
-# def home(): 
-#     return {"key":"Hello"}
-
-# @app.get('/{pk}')
-# def get_item(pk: int, q: float = None):
-#     return{"key":pk, "q":q}
-
-# @app.get('/user/{pk}/items/{item}/')
-# def get_user_item(pk:int,item:str):
-#     return{"user": pk,"item": item}
