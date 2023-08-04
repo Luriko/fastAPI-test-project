@@ -1,5 +1,5 @@
-from fastapi import FastAPI, Query, Path,Body
-from .schemas import Student,Student_id
+from fastapi import FastAPI
+from .schemas import Student
 from fastapi.middleware.cors import CORSMiddleware
 import psycopg2
 

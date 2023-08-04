@@ -1,4 +1,5 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9
+FROM python:3.11-alpine
+WORKDIR /app
 
 COPY /my-app/fastAPI/__pycache__/requirements.txt /app/requirements.txt
 
