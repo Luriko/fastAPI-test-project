@@ -38,7 +38,7 @@ def create_student(item: Student):
     cursor.execute(f"""INSERT INTO students(id, familiya, imya, otchestvo, birthdate) 
                     VALUES ((SELECT nextval('students_id')), '{item.familiya}','{item.imya}','{item.otchestvo}','{item.birthdate}')""")
     con.commit()
-    return "родили"
+    return "success"
 
 @app.get('/get_all_students')
 def get_all_students():
@@ -57,7 +57,7 @@ def get_by_student_id(id):
     if len(fet)>0 :
         return {'familiya':fet[0][1],'imya':fet[0][2],'otchestvo':fet[0][3],'birthdate':fet[0][4]}
     else:
-        return "ничего"
+        return "success"
 
 @app.get("/is_over_18_{id}")
 def is_over_18_(id):
@@ -66,13 +66,13 @@ def is_over_18_(id):
     if len(fet)>0 :
         return {'familiya':fet[0][1],'imya':fet[0][2],'otchestvo':fet[0][3],'birthdate':fet[0][4]}
     else:
-        return "ничего"
+        return "success"
     
 @app.patch("/Change_info_{id}")
 def Change_info(item: Student,id):
     cursor.execute(f"UPDATE students SET familiya = '{item.familiya}', imya = '{item.imya}', otchestvo = '{item.otchestvo}', birthdate = '{item.birthdate}' WHERE id = {id}")
     con.commit()
-    return "готово"
+    return "success"
 
 @app.get("/get_by_{familiya}")
 def get_by_(familiya):

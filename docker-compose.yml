@@ -1,13 +1,14 @@
 version: '3'
 services:
   fastapi:
-    build: app
-  ports:
-    - "8000:8000"
-  db:
-    image: "postgres:13.4"
-    container_name: db
+    build: C:\Users\User\Desktop\тщ\work fastapi
+    ports:
+      - "8000:8000"
+  postgres:
+    image: postgres:13.4
+    environment:
+      - POSTGRES_DB:"group"
+      - POSTGRES_USER:"postgres"
+      - POSTGRES_PASSWORD:"123456"
     ports:
       - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
